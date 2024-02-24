@@ -1,114 +1,34 @@
-questions= [
-{ 
-question: "which is the largest animal in the world?", 
-answers: [
-{ text: "shark", correct: false},
+const inputBox = document.getElementById("input-box"); 
+  const listContainer= document.getElementById("list-container");
+  
+  function addTask(){
+  if(inputBox.value === ''){ 
+  alert("You must write something!");}
+  else {let li = document.createElement("li"); 
+  li.innerHTML = inputBox.value;
+  listContainer.appendChild(li);
+  let span = document.createElement("span");
+  span.innerHTML = "\u00d7";
+  li.appendChild(span);}
+  inputBox.value = "";
+  saveData();}
 
-{ text: "whale", correct: true},
+  listContainer.addEventListener("click", function(e){
+  if(e.target.tagName === "LI"){
+  e.target.classList.toggle("checked");
+  saveData();
+  }
+  
+  else if(e.target.tagName === "SPAN"){
+  e.target.parentElement.remove();
+  saveData();
+  
+  }
+  }, false);
 
-{ text: "dog", correct: false},
-
-{ text: "cat", correct: false}, ] },
-
-{
-question: "which is the smallest continent in the world?", answers: [
-{ text: "Asia", correct: false},
-
-{ text: "Australia", correct: false},
-
-{ text: "Arctic", correct: true},
-
-{ text: "Africa", correct: false},]},
-
-{question: "which is the smallest animal in the world?", 
-answers: [
-{ text: "Kalahari", correct: false},
-
-{ text: "Gohi", correct: false},
-
-{ text: "Sahara", correct: false},
-
-{ text: "Antartica", correct: true}, ]} ];
-
-
-const questionElement = document.getElementById("question");
-const answerButtons = document.getElementById("answer-buttons");
-const nextButton = document.getElementById("next-btn");
-
-let currentQuestionIndex = 0; 
-let score = 0; 
-
-
-function startQuiz(){
-  currentQuestionIndex = 0;
-  score = 0; 
-  nextButton.innerHTML = "Next";
-  showQuestion();
+function saveData(){
+  localStorage.setItem("data", listContainer.innerHTML);
 }
-
-
-
-function showQuestion(){
-  resetState()
-let currentQuestion = questions[currentQuestionIndex]; 
-let questionNo = currentQuestionIndex + 1; 
-questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
-
-currentQuestion.answers.forEach(answer => {
-const button = document.createElement("button");
-button.innerHTML = answer.text; 
-button.classList.add("btn");
-answerButtons.appendChild(button);
-if(answer.correct){button.dataset.correct = answer.correct;}
-button.addEventListener("click", selectAnswer);
-
-});
+function showTask(){
+  listContainer.innerHTML = localStorage.getItem("data")
 }
-
-function resetState(){
-nextButton.style.display = "none";
-while(answerButtons.firstChild)
-{answerButtons.removeChild(answerButtons.firstChild);}}
-
-
-function selectAnswer(e){ 
-const selectedBtn = e.target;
-const isCorrect = selectedBtn.dataset.correct === "true"; 
-if(isCorrect){
-selectedBtn.classList.add("correct");
-score++;}
-else{
-selectedBtn.classList.add("incorrect");}
-
-
-Array.from(answerButtons.children).forEach(button => { 
-if(button.dataset.correct === "true")
-{button.classList.add("correct");
-}
-button.disabled = true; 
-}); 
-nextButton.style.display = "block";}
-
-function showScore(){
-resetState();
-questionElement.innerHTML = `You scored ${score} out ot ${questions.length}!`;
-nextButton.innerHTML = "Play Again";
-nextButton.style.display = "block";}
-
-function handleNextButton(){
-currentQuestionIndex++;
-if(currentQuestionIndex < questions.length){
-showQuestion();}
-else{
-showScore();}}
-
-nextButton.addEventListener("click", ()=>{
-if(currentQuestionIndex < questions.length){
-handleNextButton();
-}
-else{
-startQuiz();}
-});
-startQuiz();
-
-

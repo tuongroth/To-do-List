@@ -1,23 +1,21 @@
-
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz App</title>
+  <title>To Do List</title>
 </head>
 
 <body>
-  <div class="app">
-    <h1>Simple Quiz</h1>
-    <div class="quiz">
-    <h2 id="question"> Question goes here</h2>
-    <div id="answer-buttons">
-    
-    <button class="btn" >Answer 1</button>
-    
-    <Button class="btn">Answer 2</button>
-    
-    <Button class="btn" >Answer 3</button>
-    
-    <Button class="btn" >Answer 4</button>
-    
-    </div><button id= "next-btn">Next</button></div></div>
+<div class="container">
+  <div class="todo-app">
+  <h2>To-do List <img src="https://drrdigitalmarketing.com/wp-content/uploads/2024/01/icon.png"></h2>
+  <div class="row">
+  <input type="text" id="input-box" placeholder="Add your text">
+  <button onclick="addTask()">Add</button></div>
+  
+  <ul id="list-container"> 
+    <!--<li class="checked">Task 1 </li>
+    <li class="checked">Task 2 </li> 
+    <li class="checked">Task 3 </li>-->
+  </ul> 
+  </div>   </div> 
+  
 </body>
